@@ -1,11 +1,21 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user
+  include SessionsHelper
 
-  def current_user
-    if session[:user_id]
-      @current_user ||= User.find(session[:user_id])
+  helper_method :current_user, :correct_user
+
+  def correct_user(post_or_comment)
+    @user = post_or_comment.user
+    if @user == current_user
+      return true
     else
-      @current_user = nil
+      return false
+    end
+  end
+
+  def login_required
+    unless logged_in?
+      flash[:error] = "You must first log in or sign up before accessing this page."
+      redirect_to login_path
     end
   end
 end

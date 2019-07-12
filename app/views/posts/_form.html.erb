@@ -9,12 +9,15 @@
 			</ul>
 		</div>
 	<% end %>
-
-	<%= f.label :title %><br>
-	<%= f.text_field :title %><br>
-	<br>
-	<%= f.label :body %><br>
-	<%= f.text_area :body %><br>
-	<br>
-	<%= f.submit %>
+        <div class="form-group">
+          <label for="title">Title</label>
+          <%= f.text_field(:title, class: "form-control", placeholder: "Enter Title") %>
+        </div>
+        <div class="form-group">
+          <label for="body">Description</label>
+          <%= f.text_area(:body, class: "form-control", placeholder: "Enter Description", rows: 10) %>
+        </div>
+        <div class="text-right">
+          <%= f.submit(class: "btn btn-primary") %>
+        </div>
 <% end %>

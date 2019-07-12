@@ -1,9 +1,6 @@
-<%= form_for([@post, @post.comments.build]) do |f| %>
-	<%= f.label :name %><br>
-	<%= f.text_field :name %><br>
-	<br>
-	<%= f.label :body %><br>
-	<%= f.text_area :body %><br>
-	<br>
-	<%= f.submit %>
+<%= form_for([@post, @post.comments.build], :html => { :style => "margin: 35px 0 25px" } ) do |f| %>
+  <div class="form-group">
+    <%= f.text_area(:body, placeholder: "Add a comment",  class: "form-control") %>
+  </div>
+  <%= f.submit "Add Comment", class: "btn btn-primary"%>
 <% end %>

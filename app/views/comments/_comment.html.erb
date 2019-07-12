@@ -1,14 +1,10 @@
-<div class="comment clearfix">
-	<div class="comment_content">
-		<p class="comment_name"><strong><%= comment.name %></strong></p>
-		<p class="comment_body"><%= comment.body %></p>
-		<p class="comment_time"><%= time_ago_in_words(comment.created_at) %> Ago</p>
-	</div>
-
-	<% if current_user %>
-	<p><%= link_to 'Delete', [comment.post, comment],
-								  method: :delete,
-								  class: "button",
-								 	data: { confirm: 'Are you sure?' } %></p>
- 	<% end %>
-</div>
+<% return if comment.id.nil? %>
+<li class="list-group-item">
+  <p style="font-size: 90%;margin-bottom: 5px;"><%= comment.body %></p>
+  <section class="d-flex justify-content-between align-items-center">
+    <span style="font-size: 80%" class="text-muted"><%= comment.user.name %> commented <%= time_ago_in_words(comment.created_at) %> Ago</span>
+    <% if current_user && correct_user(comment)%>
+      <%= link_to 'Delete', [comment.post, comment], method: :delete, data: { confirm: 'Are you sure?' }, style: "font-size: 90%;color: mediumvioletred" %>
+    <% end %>
+  </section>
+</li>

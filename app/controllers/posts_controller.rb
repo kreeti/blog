@@ -1,50 +1,53 @@
 class PostsController < ApplicationController
-	def index
-		@posts = Post.all.order('created_at DESC')
-	end
+  before_action :login_required, only: [:new, :edit, :create, :update, :destroy]
 
-	def new
-		@post = Post.new
-	end
+  def index
+    @posts = Post.all.order('created_at DESC')
+  end
 
-	def show
-		@post = Post.find(params[:id])
-	end
+  def new
+    @post = Post.new
+  end
 
-	def create
-		@post = Post.new(post_params)
+  def show
+    @post = Post.find(params[:id])
+  end
 
-		if @post.save
-			redirect_to @post
-		else
-			render 'new'
-		end
-	end
+  def create
+    @post = Post.new(post_params)
+    @post.user = current_user
 
-	def edit
-		@post = Post.find(params[:id])
-	end
+    if @post.save
+      redirect_to @post
+    else
+      render 'new'
+    end
+  end
 
-	def update
-		@post = Post.find(params[:id])
+  def edit
+    @post = Post.find(params[:id])
+  end
 
-		if @post.update(params[:post].permit(:title, :body))
-			redirect_to @post
-		else
-			render 'edit'
-		end
-	end
+  def update
+    @post = Post.find(params[:id])
 
-	def destroy
-		@post = Post.find(params[:id])
-		@post.destroy
+    if @post.update(params[:post].permit(:title, :body))
+      redirect_to @post
+    else
+      render 'edit'
+    end
+  end
 
-		redirect_to posts_path
-	end
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
 
-	private
+    redirect_to posts_path
+  end
 
-	def post_params
-		params.require(:post).permit(:title, :body)
-	end
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :body)
+  end
 end
