@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_filter :login_required, on: [:new, :edit, :create, :update, :destroy]
+  before_action :login_required, only: [:new, :edit, :create, :update, :destroy]
 
   def index
     @posts = Post.all.order('created_at DESC')

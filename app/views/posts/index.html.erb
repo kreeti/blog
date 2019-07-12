@@ -1,8 +1,10 @@
-<ul class="list-group list-group-flush">
-  <% @posts.each do |post| %>
-  <li class="list-group-item">
-    <%= link_to post.title, post, class: "d-block", style: "font-size: 26px" %>
-    <small style="font-size: 90%"><%= post.created_at.strftime("%B %d, %Y") %></small>
-  </li>
-  <% end %>
-</ul>
+<section>
+  <ul class="list-group list-group-flush">
+    <% @posts.each do |post| %>
+    <li class="list-group-item">
+      <%= link_to post.title, post, class: "d-block", style: "font-size: 26px" %>
+      <small style="font-size: 90%"><%= post.created_at.strftime("%B %d, %Y") %></small>
+    </li>
+    <% end %>
+  </ul>
+</section>

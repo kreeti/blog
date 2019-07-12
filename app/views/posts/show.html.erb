@@ -1,23 +1,25 @@
-<div id="post_content">
-	<h1 class="title"><%= @post.title %></h1>
-	<p class="date">
-		Submitted <%= time_ago_in_words(@post.created_at) %> Ago
-		<% if current_user %>
-		| <%= link_to 'Edit', edit_post_path(@post) %> |
-		  <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
-	  <% end %>
-	</p>
-	<p class="body"><%= @post.body %></p>
-
-
-</div>
-
 <div class="card mb-3">
-   <div class="card-body">
-     <h5 style="margin-bottom: 5px"><%= @post.title %></h5>
-     <p style="margin-bottom: 8px" class="card-subtitle"><small class="text-muted">Submitted <%= time_ago_in_words(@post.created_at) %> Ago</small></p>
+  <div class="card-body">
+    <section class="d-flex justify-content-between">
+      <section>
+        <h5 style="margin-bottom: 5px"><%= @post.title %></h5>
+        <p style="margin-bottom: 8px" class="card-subtitle"><small class="text-muted">Submitted <%= time_ago_in_words(@post.created_at) %> Ago</small></p>
+      </section>
+
+      <% if current_user && correct_user(@post) %>
+        <section>
+	  <%= link_to 'Edit', edit_post_path(@post) %> |
+	  <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </section>
+      <% end %>
+    </section>
+
      <p class="card-text"><%= @post.body %></p>
-     <%= render "comments/form" %>
+
+     <% if current_user %>
+        <%= render "comments/form" %>
+     <% end %>
+
      <div id="comments">
        <h2 style="font-size: 20px"><%= @post.comments.count %> Comments</h2>
        <ul class="list-group list-group-flush">
